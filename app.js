@@ -190,6 +190,7 @@ makeDictionaryAPIRequest = (wordArray) => {
                 }
 
                 if (count == wordArray.length) {
+					console.log('-------------------------------------words-----------------------',wordDetailsArray);
                     return wordDetailsArray;
                 }
 
