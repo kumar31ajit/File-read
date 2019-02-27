@@ -196,7 +196,7 @@ makeDictionaryAPIRequest = (wordArray) => {
             });
 
         }
-        return wordDetailsArray;
+        //return wordDetailsArray;
     })
 }
 
