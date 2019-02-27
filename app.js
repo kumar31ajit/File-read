@@ -9,6 +9,11 @@ var filepath1 = 'dummy.txt';
 var filepath2 = 'dummy1.txt';
 
 
+app.get('/', (req, res) => {
+
+    res.send('Express');
+});
+
 app.get('/read-file', (req, res) => {
 
     return fetchDocumentFromURL()
