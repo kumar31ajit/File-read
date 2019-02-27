@@ -153,7 +153,7 @@ findTopWordsByOccurences = () => {
 makeDictionaryAPIRequest = (wordArray) => {
     /* call dictionary API for top 10 words order by occuurence */
 
-    return Promise.resolve().then(() => {
+    return new Promise(function(resolve,reject){
         let wordDetailsArray = [];
         var count = 0;
         let apiKey = 'dict.1.1.20170610T055246Z.0f11bdc42e7b693a.eefbde961e10106a4efa7d852287caa49ecc68cf';
@@ -190,14 +190,12 @@ makeDictionaryAPIRequest = (wordArray) => {
                 }
 
                 if (count == wordArray.length) {
-					console.log('-------------------------------------words-----------------------',wordDetailsArray);
-                    return wordDetailsArray;
+                    resolve (wordDetailsArray);
                 }
 
             });
 
         }
-        //return wordDetailsArray;
     })
 }
 
