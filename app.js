@@ -1,5 +1,5 @@
 const express = require('express')
-const http = require('http');
+const http = require('https');
 const app = express()
 const port = 3000;
 const fs = require('fs')
@@ -33,8 +33,8 @@ fetchDocumentFromURL = () => {
         fs.writeFileSync(filepath2, '');
         
         let params = {
-            host: 'norvig.com',
-            path: '/big.txt'
+            host: 'terriblytinytales.com',
+            path: '/test.txt'
         }
         let req = http.request(params, function (res) {
 
@@ -66,11 +66,7 @@ fetchDocumentFromURL = () => {
             res.on('end', function () {
                 return findTopWordsByOccurences()
                     .then(data => {
-                        //call dictionairy API for top ten words
-                        return makeDictionaryAPIRequest(data)
-                    })
-                    .then(result => {
-                        resolve(result);
+						resolve(data);
                     })
                     .catch(err => {
                         reject(err);
@@ -153,55 +149,6 @@ findTopWordsByOccurences = () => {
 
             );
     });
-}
-
-makeDictionaryAPIRequest = (wordArray) => {
-    /* call dictionary API for top 10 words order by occuurence */
-
-    return new Promise(function(resolve,reject){
-        let wordDetailsArray = [];
-        var count = 0;
-        let apiKey = 'dict.1.1.20170610T055246Z.0f11bdc42e7b693a.eefbde961e10106a4efa7d852287caa49ecc68cf';
-        for (let item in wordArray) {
-            let word = wordArray[item].word;
-            let wordCount = wordArray[item].wordCount;
-            var request = require("request");
-
-            var options = {
-                method: 'GET',
-                url: 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup',
-                qs:
-                {
-                    key: apiKey,
-                    lang: 'en-en',
-                    text: word
-                }
-            };
-
-            request(options, function (error, response, body) {
-                count++;
-                if (error) throw new Error(error);
-
-                if (body) {
-                    body = JSON.parse(body);
-
-                    let key = word
-                    let obj = {};
-                    obj[key] = {
-                        occurrence: wordCount,
-                        syn: _.get(body, 'def.0.tr', null)
-                    }
-                    wordDetailsArray.push(obj);
-                }
-
-                if (count == wordArray.length) {
-                    resolve (wordDetailsArray);
-                }
-
-            });
-
-        }
-    })
 }
 
 
